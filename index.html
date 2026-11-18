@@ -252,6 +252,9 @@ document.addEventListener('change',function(e){
 });
 render();
 if(!TOKEN||GAS_URL.indexOf('__')===0){DATA={ok:false,filas:[]};render()}else{google.script.run.withSuccessHandler(function(d){DATA=d;render()}).withFailureHandler(function(){DATA={ok:false,filas:[]};aviso='';render()}).datos(TOKEN)}
+/* Se actualiza sola: al volver a la pantalla y cada minuto */
+setInterval(function(){var a=document.activeElement;if(!document.hidden&&!busy&&!Object.keys(subiendo).some(function(k){return subiendo[k]>0})&&!(a&&a.tagName==='TEXTAREA'))refrescar()},60000);
+document.addEventListener('visibilitychange',function(){if(!document.hidden&&!busy)refrescar()});
 </script>
 </body>
 </html>
